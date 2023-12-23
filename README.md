@@ -6,8 +6,34 @@
 
 - Foi um projeto desenvolvido em grupo de 3 integrantes, estudantes da Cubos Academy. 
 
+### Tecnologias utilizadas
+#### Linguagens
+- Node JS
+- PostgreSQL
+
+#### Pacotes
+- Express
+- AWS SDK
+- Bcrypt
+- Dotenv
+- FS
+- Handlebars
+- JOI
+- Json Web Token
+- Knex
+- Multer
+- PG
+
+#### API's externas
+- MailTrap
+- BackBlaze
+- Render
+- Supa Base
+
+
 ## Rodar o projeto
 
+É possível rodar o projeto localmente ou remotamente. 
 ### Rodar remotamente
 
 1) Para rodar o projeto remotamente, só é necessário utilizar o link do deploy: https://jamjascript-pdv-cubos-academy.onrender.com
@@ -20,7 +46,7 @@ A fim de garantir a segurança da aplicação, os dados do arquivo .env, não s�
 
 Portanto, alguns endpoints, não irão funcionar. No entanto, pode-se configurar suas próprias variáveis para teste local. Siga as orientações da instalação do projeto.
 
-### Tecnologias necessárias
+### Ferramentas necessárias
 
 - VS Code
 - Git/ Bash
@@ -46,6 +72,8 @@ Portanto, alguns endpoints, não irão funcionar. No entanto, pode-se configurar
 9) Rode o projeto por meio do comando: `npm run dev`
 
 ## Estrutura
+
+![estrutura pdv](https://github.com/joaonevescampos/ponto-de-vendas-cubos-academy/assets/126534395/263e56d3-70df-41e2-af75-08dd6242cfd2)
 
 ## Endpoints
 
@@ -563,14 +591,9 @@ Exemplo de Resposta:
     }
 ]
 ```
-## Tecnologias
-- Node JS
-- PostgreSQL
-- Express
-
 ## Autores
-- João Victor Neves Campos de Jesus, 
-- Jonas da Silva Pouzo, 
+- João Victor Neves Campos de Jesus 
+- Jonas da Silva Pouzo
 - Maísa Carla dos Santos Costa
 
 Organização: Cubos Academy
