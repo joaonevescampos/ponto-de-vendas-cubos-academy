@@ -1,552 +1,580 @@
-# desafio-backend-05-pdv
-![](https://i.imgur.com/xG74tOh.png)
+# Ponto de Vendas - Desafio Final Cubos Academy
 
-# Desafio Módulo 5 - Backend
+## Introdução
+### Sobre o projeto
+- Este projeto foi desenvolvido durante o curso de desenvolvimento de Software com foco em Back-end na Cubos Academy. O objetivo do projeto, é simular o back-end de um software que pode ser utilizado por uma loja de vendas.
 
-Seja bem vindo(a) ao desafio do módulo 5.
+- Foi um projeto desenvolvido em grupo de 3 integrantes, estudantes da Cubos Academy. 
 
-Sua tarefa como desenvolvedor(a) será criar uma API para um PDV (Frente de Caixa). Esse será um projeto piloto, ou seja, no futuro outras funcionalidades serão implementadas.
+## Rodar o projeto
 
+### Rodar remotamente
 
-**Importante 1: Sempre que a validação de uma requisição falhar, responda com código de erro e mensagem adequada à situação, ok?**
+1) Para rodar o projeto remotamente, só é necessário utilizar o link do deploy: https://jamjascript-pdv-cubos-academy.onrender.com
 
-**Importante 2: Para endpoints de cadastro/atualização os objetos de requisição devem conter as propriedades equivalentes as colunas das tabelas.**
+2) Utilize uma ferramenta para testar a aplicação, como por exemplo, Insomnia, Postman, Mocha...
 
-**Exemplo:**
+### Rodar localmente
 
-```javascript
-// Corpo da requisição para cadastro de usuário (body)
+A fim de garantir a segurança da aplicação, os dados do arquivo .env, não são disponibilizados para permitir o funcionamento correto da API. 
+
+Portanto, alguns endpoints, não irão funcionar. No entanto, pode-se configurar suas próprias variáveis para teste local. Siga as orientações da instalação do projeto.
+
+### Tecnologias necessárias
+
+- VS Code
+- Git/ Bash
+- Ferramenta de teste. Ex.: Insomnia
+
+### Instalação
+1) Faça um fork deste repositório.
+
+2) Copie a url do projeto clicando em code --> escolha a melhor opção para você.
+
+3) Selecione uma pasta do seu computador e abra o VS Code.
+
+4) Clone o projeto para sua pasta. No terminal (Ctrl + j), digite: `git clone <url do projeto>`
+
+5) No terminal, inicialize o git com o comando: `git init`, caso queira fazer alterações no projeto e usando o Git.
+
+6) Em seguida, instale todos os pacotes necessários para rodar a aplicação digitando o comando: `npm install`
+
+7) Renomeie o arquivo chamado ".envExemplo" para ".env".
+
+8) Dentro deste arquivo, defina suas variáveis de ambiente.
+
+9) Rode o projeto por meio do comando: `npm run dev`
+
+## Estrutura
+
+## Endpoints
+
+### Usuário
+#### Cadastrar usuário - `POST` `/usuario`
+Exemplo de Requisição Body - JSON:
+```
+	{
+        "nome": "João",
+        "email": "joao@gmail.com",
+        "senha": "12345678"
+	}
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+	{
+		"id": 1,
+		"nome": "João",
+		"email": "joao@gmail.com"
+	}
+```
+
+#### Logar usuário - `POST` `/login`
+Exemplo de Requisição Body - JSON:
+```
 {
-    "nome": "José",
-    "email": "jose@email.com",
-    "senha": "jose"
+	"email": "joao@gmail.com",
+	"senha": "12345678"
 }
 ```
 
-**ATENÇÃO: Todos os endpoints deverão atender os requisitos citados acima.**
+Exemplo de Resposta:
 
-## **Banco de dados**
-
-Você precisa criar um Banco de Dados PostgreSQL chamado `pdv`.
-
-**IMPORTANTE: Deverá ser criado no projeto o arquivo SQL que deverá ser o script contendo os comandos de criação das tabelas respeitando os nomes das tabelas e colunas respectivamente, além de, conter os comandos para a inserção das categorias que devem ser previamente cadastradas (estão citadas na 1ª Sprint no item Listar Categorias).**
-
-## **Requisitos obrigatórios**
-
--   A API a ser criada deverá acessar o banco de dados a ser criado `pdv` para persistir e manipular os dados de categorias, clientes, pedidos, produtos e usuários utilizados pela aplicação.
--   O campo id das tabelas no banco de dados deve ser auto incremento, chave primária e não deve permitir edição uma vez criado.
--   Qualquer valor monetário deverá ser representado em centavos (Ex.: R$ 10,00 reais = 1000)
-
-## **Status Codes**
-
-Abaixo, listamos os possíveis **_status codes_** esperados como resposta da API.
-
-```javascript
-// 200 (OK) = requisição bem sucedida
-// 201 (Created) = requisição bem sucedida e algo foi criado
-// 204 (No Content) = requisição bem sucedida, sem conteúdo no corpo da resposta
-// 400 (Bad Request) = o servidor não entendeu a requisição pois está com uma sintaxe/formato inválido
-// 401 (Unauthorized) = o usuário não está autenticado (logado)
-// 403 (Forbidden) = o usuário não tem permissão de acessar o recurso solicitado
-// 404 (Not Found) = o servidor não pode encontrar o recurso solicitado
-// 409 (Conflict) = Quando tenta cadastrar um valor que já existe
-// 500 (Internal Server Error) = erro inesperado do servidor
+*Status Code: 200*
+```
+{
+	"usuario": {
+		"id": 1,
+		"nome": "João",
+		"email": "joao@gmail.com"
+	},
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMDc5NTA5LCJleHAiOjE3MDMxMDgzMDl9.nsrUhEFYEJp5MnxGda54HZsmNSjtTRw9lp8W1eZkdFI"
+}
+```
+#### Detalhar usuário - `GET` `/usuario`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
 ```
 
-<details>
-<summary>1ª Sprint</summary>
-<br>
+Exemplo de Resposta:
 
-<details>
-<summary><b>Banco de Dados</b></summary>
-<br>
-
-Crie as seguintes tabelas e colunas abaixo:
-
-**ATENÇÃO! Os nomes das tabelas e das colunas a serem criados devem seguir exatamente os nomes listados abaixo.**
-
--   usuarios
-    -   id
-    -   nome
-    -   email (campo único)
-    -   senha
--   categorias
-    -   id
-    -   descricao
-
-</details>
-
-<details>
-<summary><b>Listar categorias</b></summary>
-
-#### `GET` `/categoria`
-
-Essa é a rota que será chamada quando o usuário quiser listar todas as categorias cadastradas.
-
-As categorias a seguir precisam ser previamente cadastradas para que sejam listadas no endpoint de listagem das categorias.
-
-## **Categorias**
-
--   Informática
--   Celulares
--   Beleza e Perfumaria
--   Mercado
--   Livros e Papelaria
--   Brinquedos
--   Moda
--   Bebê
--   Games
-
-</details>
-
-<details>
-<summary><b>Cadastrar usuário</b></summary>
-
-#### `POST` `/usuario`
-
-Essa é a rota que será utilizada para cadastrar um novo usuário no sistema.
-
-Critérios de aceite:
-
-    - Validar os campos obrigatórios:
-        - nome
-        - email
-        - senha
-    - A senha deve ser criptografada utilizando algum algoritmo de criptografia confiável.
-    - O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois usuários possuírem o mesmo e-mail.
-
-</details>
-
-<details>
-<summary><b>Efetuar login do usuário</b></summary>
-
-#### `POST` `/login`
-
-Essa é a rota que permite o usuário cadastrado realizar o login no sistema.
-
-Critérios de aceite:
-
-    - Validar se o e-mail e a senha estão corretos para o usuário em questão.
-    - Gerar um token de autenticação para o usuário.
-
-</details>
-
----
-
-## **ATENÇÃO**: Todas as funcionalidades (endpoints) a seguir, a partir desse ponto, deverão exigir o token de autenticação do usuário logado, recebendo no header com o formato Bearer Token. Portanto, em cada funcionalidade será necessário validar o token informado.
-
----
-
-<details>
-<summary><b>Detalhar perfil do usuário logado</b></summary>
-
-#### `GET` `/usuario`
-
-Essa é a rota que permite o usuário logado a visualizar os dados do seu próprio perfil, de acordo com a validação do token de autenticação.
-
-</details>
-
-<details>
-<summary><b>Editar perfil do usuário logado</b></summary>
-
-#### `PUT` `/usuario`
-
-Essa é a rota que permite o usuário logado atualizar informações de seu próprio cadastro, de acordo com a validação do token de autenticação.
-
-Critérios de aceite:
-
-    - Validar os campos obrigatórios:
-        - nome
-        - email
-        - senha
-    - A senha deve ser criptografada utilizando algum algoritmo de criptografia confiável.
-    - O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois usuários possuírem o mesmo e-mail.
-
-</details>
-
-<details>
-<summary><b>Efetuar deploy da aplicação</b></summary>
-<br>
-
-Fazer deploy do projeto e disponibilizar a URL.
-
-</details>
-
-</details>
-
----
-
-<details>
-<summary>2ª Sprint</summary>
-<br>
-
-<details>
-<summary><b>Banco de Dados</b></summary>
-<br>
-
-Crie as seguintes tabelas e colunas abaixo: 
-
-**ATENÇÃO! Os nomes das tabelas e das colunas a serem criados devem seguir exatamente os nomes listados abaixo.**
-
--   produtos
-    -   id
-    -   descricao
-    -   quantidade_estoque
-    -   valor
-    -   categoria_id
--   clientes
-    -   id
-    -   nome
-    -   email (campo único)
-    -   cpf (campo único) 
-    -   cep 
-    -   rua
-    -   numero
-    -   bairro
-    -   cidade
-    -   estado
-
-</details>
-
----
-
-## **ATENÇÃO**: Todas as funcionalidades (endpoints) a seguir, a partir desse ponto, deverão exigir o token de autenticação do usuário logado, recebendo no header com o formato Bearer Token. Portanto, em cada funcionalidade será necessário validar o token informado.
-
----
-
-<details>
-<summary><b>Cadastrar Produto</b></summary>
-
-#### `POST` `/produto`
-
-Essa é a rota que permite o usuário logado cadastrar um novo produto no sistema.
-
-Critérios de aceite:
-
-    -   Validar os campos obrigatórios:
-        -   descricao
-        -   quantidade_estoque
-        -   valor
-        -   categoria_id
-    -   A categoria informada na qual o produto será vinculado deverá existir.
-
-</details>
-
-<details>
-<summary><b>Editar dados do produto</b></summary>
-
-#### `PUT` `/produto/:id`
-
-Essa é a rota que permite o usuário logado a atualizar as informações de um produto cadastrado.
-
-Critérios de aceite:
-
-    -   Validar se existe produto para o id enviado como parâmetro na rota.
-    -   Validar os campos obrigatórios:
-        -   descricao
-        -   quantidade_estoque
-        -   valor
-        -   categoria_id
-    -   A categoria informada na qual o produto será vinculado deverá existir.
-
-</details>
-
-<details>
-<summary><b>Listar Produtos</b></summary>
-
-#### `GET` `/produto`
-
-Essa é a rota que será chamada quando o usuário logado quiser listar todos os produtos cadastrados.
-
-Deveremos incluir um parâmetro do tipo query **categoria_id** para que seja possível consultar produtos por categorias, de modo, que serão filtrados de acordo com o id de uma categoria.
-
-Critérios de aceite:
-
-    - Caso seja enviado o parâmetro do tipo query **categoria_id**, filtrar os produtos de acordo com a categoria, caso o id de categoria informada exista.
-    - Caso não seja informado o parâmetro do tipo query **categoria_id** todos os produtos cadastrados deverão ser retornados.
-
-</details>
-
-<details>
-<summary><b>Detalhar Produto</b></summary>
-
-#### `GET` `/produto/:id`
-
-Essa é a rota que permite o usuário logado obter um de seus produtos cadastrados.  
-
-Critérios de aceite:
-
-    -   Validar se existe produto para o id enviado como parâmetro na rota.
-
-</details>
-
-<details>
-<summary><b>Excluir Produto por ID</b></summary>
-
-#### `DELETE` `/produto/:id`
-
-Essa é a rota que será chamada quando o usuário logado quiser excluir um de seus produtos cadastrados.  
-
-Critérios de aceite:
-
-    -   Validar se existe produto para o id enviado como parâmetro na rota.
-
-</details>
-
-<details>
-<summary><b>Cadastrar Cliente</b></summary>
-
-#### `POST` `/cliente`
-
-Essa é a rota que permite usuário logado cadastrar um novo cliente no sistema.
-
-Critérios de aceite:
-
-    -   Validar os campos obrigatórios:
-        -   nome
-        -   email
-        -   cpf
-    -   O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois clientes possuírem o mesmo e-mail.
-    -   O campo cpf no banco de dados deve ser único para cada registro, não permitindo dois clientes possuírem o mesmo cpf.
-
-</details>
-
-<details>
-<summary><b>Editar dados do cliente</b></summary>
-
-#### `PUT` `/cliente/:id`
-
-Essa é a rota que permite o usuário realizar atualização de um cliente cadastrado.
-
-Critérios de aceite:
-
-    -   Validar se existe cliente para o id enviado como parâmetro na rota.
-    -   Validar os campos obrigatórios:
-        -   nome
-        -   email
-        -   cpf
-    -   O campo e-mail no banco de dados deve ser único para cada registro, não permitindo dois clientes possuírem o mesmo e-mail.
-    -   O campo cpf no banco de dados deve ser único para cada registro, não permitindo dois clientes possuírem o mesmo cpf.
-
-</details>
-
-<details>
-<summary><b>Listar Clientes</b></summary>
-
-#### `GET` `/cliente`
-
-Essa é a rota que será chamada quando o usuário logado quiser listar todos os clientes cadastrados.
-
-</details>
-
-<details>
-<summary><b>Detalhar Cliente</b></summary>
-
-#### `GET` `/cliente/:id`
-
-Essa é a rota que será chamada quando o usuário logado quiser obter um de seus clientes cadastrados.  
-
-Critérios de aceite:
-
-    -   Validar se existe cliente para o id enviado como parâmetro na rota.
-
-</details>
-
-</details>
-
----
-
-
-<details>
-<summary>3ª Sprint</summary>
-<br>
-
-<details>
-<summary><b>Banco de Dados</b></summary>
-<br>
-
-Crie as seguintes tabelas e colunas abaixo: 
-
-**ATENÇÃO! Os nomes das tabelas e das colunas a serem criados devem seguir exatamente os nomes listados abaixo.**
-
--   pedidos
-    -   id
-    -   cliente_id
-    -   observacao
-    -   valor_total
--   pedido_produtos
-    -   id
-    -   pedido_id
-    -   produto_id
-    -   quantidade_produto
-    -   valor_produto
--   produtos
-    -   produto_imagem
-</details>
-
----
-
-## **ATENÇÃO**: Todas as funcionalidades (endpoints) a seguir, a partir desse ponto, deverão exigir o token de autenticação do usuário logado, recebendo no header com o formato Bearer Token. Portanto, em cada funcionalidade será necessário validar o token informado.
-
----
-
-<details>
-<summary><b>Cadastrar Pedido</b></summary>
-
-#### `POST` `/pedido`
-
-Essa é a rota que será utilizada para cadastrar um novo pedido no sistema.
-
-**Lembre-se:** Cada pedido deverá conter ao menos um produto vinculado.
-
-**Atenção:** As propriedades produto_id e quantidade_produto devem ser informadas dentro de um array e para cada produto deverá ser criado um objeto neste array, como ilustrado no objeto de requisição abaixo.
-Só deverá ser cadastrado o pedido caso todos produtos vinculados ao pedido realmente existão no banco de dados.
-
-```javascript
-// Corpo da requisição para cadastro de pedido (body)
+*Status Code: 200*
+```
 {
-    "cliente_id": 1,
-    "observacao": "Em caso de ausência recomendo deixar com algum vizinho",
-    "pedido_produtos": [
-        {
-            "produto_id": 1,
-            "quantidade_produto": 10
-        },
-        {
-            "produto_id": 2,
-            "quantidade_produto": 20
-        }
-    ]
+	"id": 1,
+	"nome": "João",
+	"email": "joao@gmail.com"
+}
+```
+#### Atualizar usuário - `PUT` `/usuario/:id`
+Exemplo de Requisição Body - JSON:
+```
+{
+	"nome": "João Campos",
+	"email": "joaocampos@gmail.com",
+	"senha": "87654321"
 }
 ```
 
-Critérios de aceite:
+Exemplo de Resposta:
 
-    -   Validar os campos obrigatórios:
-        -   cliente_id
-        -   pedido_produtos
-            -   produto_id
-            -   quantidade_produto
-    -   Validar se existe cliente para o id enviado no corpo (body) da requisição.
-    -   Validar se existe produto para cada produto_id informado dentro do array enviado no corpo (body) da requisição.
-    -   Validar se existe a quantidade em estoque de cada produto existente dentro do array, de acordo com a quantidade informada no corpo (body) da requisição.
-    -   O pedido deverá ser cadastrado, apenas, se todos os produtos estiverem validados. 
-    -   Enviar e-mail para o cliente notificando que o pedido foi efetuado com sucesso.   
+*Status Code: 201*
+```
+{
+	"id": 1,
+	"nome": "João Campos",
+	"email": "joaocampos@gmail.com"
+}
+```
 
-</details>
+### Categoria
+#### Listar Categoria - `GET` `/categoria`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
 
-<details>
-<summary><b>Listar Pedidos</b></summary>
+Exemplo de Resposta:
 
-#### `GET` `/pedido`
+*Status Code: 200*
+```
+[
+	{
+		"id": 1,
+		"descricao": "Informática"
+	},
+	{
+		"id": 2,
+		"descricao": "Celulares"
+	},
+	{
+		"id": 3,
+		"descricao": "Beleza e Perfumaria"
+	},
+	{
+		"id": 4,
+		"descricao": "Mercado"
+	},
+	{
+		"id": 5,
+		"descricao": "Livros e Papelaria"
+	},
+	{
+		"id": 6,
+		"descricao": "Brinquedos"
+	},
+	{
+		"id": 7,
+		"descricao": "Moda"
+	},
+	{
+		"id": 8,
+		"descricao": "Bebê"
+	},
+	{
+		"id": 9,
+		"descricao": "Games"
+	}
+]
+```
 
-Essa é a rota que será chamada quando o usuário logado quiser listar todos os pedidos cadastrados.
+### Produto
+- **Obs.: Todos os valores deverão ser informados em centavos.**
+#### Cadastrar produto - `POST` `/produto`
+Exemplo de Requisição Body - MULTIPART FORM:
+```
+{
+	"descricao": "bola",
+	"valor": 15000,
+	"quantidade_estoque": 100,
+	"categoria_id": 6,
+	"produto_imagem": "bicicleta.jpeg"
+}
+```
 
-Deveremos incluir um parâmetro do tipo query **cliente_id** para que seja possível consultar pedidos por clientes, de modo, que serão filtrados de acordo com o id de um cliente.
+Exemplo de Resposta:
 
-```javascript
-// Resposta para listagem de pedido (body)
+*Status Code: 201*
+```
+{
+	"id": 3,
+	"descricao": "bola",
+	"valor": 15000,
+	"quantidade_estoque": 100,
+	"categoria_id": 6,
+	"categoria_descricao": "Brinquedos",
+	"produto_imagem": "bola.jpeg"
+}
+```
+#### Detalhar produto - `GET` `/produto/:id`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 200*
+```
+{
+	"id": 2,
+	"descricao": "relógio",
+	"valor": 30000,
+	"quantidade_estoque": 56,
+	"categoria_id": 3,
+	"categoria_descricao": "Beleza e Perfumaria"
+    "produto_imagem": null
+}
+```
+#### Listar produto - `GET` `/produto`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 200*
+```
+[
+	{
+		"id": 1,
+		"descricao": "notebook",
+		"valor": 250000,
+		"quantidade_estoque": 120,
+		"categoria_id": 1,
+		"categoria_descricao": "Informática"
+        "produto_imagem": "notebook.jpeg"
+	},
+    {
+        "id": 2,
+        "descricao": "relógio",
+        "valor": 30000,
+        "quantidade_estoque": 56,
+        "categoria_id": 3,
+        "categoria_descricao": "Beleza e Perfumaria"
+        "produto_imagem": null
+    },
+    {
+        "id": 3,
+        "descricao": "bola",
+        "valor": 15000,
+        "quantidade_estoque": 100,
+        "categoria_id": 6,
+        "categoria_descricao": "Brinquedos",
+        "produto_imagem": "bola.jpeg"
+    }
+]
+```
+#### Atualizar produto - `PUT` `/produto/:id`
+Exemplo de Requisição Body - MULTIPART FORM:
+```
+    {
+        "descricao": "X Box",
+        "valor": 360000,
+        "quantidade_estoque": 100,
+        "categoria_id": 9,
+        "produto_imagem": "xbox.jpeg"
+    }
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+    {
+        "id": 3,
+        "descricao": "X Box",
+        "valor": 360000,
+        "quantidade_estoque": 100,
+        "categoria_id": 9,
+        "categoria_descricao": "Games",
+        "produto_imagem": "xbox.jpeg"
+    }
+```
+#### Excluir produto - `DELETE` `/produto/:id`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 204*
+```
+// sem conteúdo
+```
+
+### Cliente
+#### Cadastrar cliente - `POST` `/cliente`
+Exemplo de Requisição Body - JSON:
+```
+{
+	"nome": "Maria",
+	"email": "maria@gmail.com",
+	"cpf": "00000000000",
+	"numero": "123"
+}
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+{
+	"id": 1,
+	"nome": "maria",
+	"email": "maria@gmail.com",
+	"cpf": "00000000000",
+	"cep": null,
+	"rua": null,
+	"numero": "123",
+	"bairro": null,
+	"cidade": null,
+	"estado": null
+}
+```
+#### Detalhar cliente - `POST` `/cliente/:id`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+{
+	"id": 1,
+	"nome": "maria",
+	"email": "maria@gmail.com",
+	"cpf": "00000000000",
+	"cep": null,
+	"rua": null,
+	"numero": "123",
+	"bairro": null,
+	"cidade": null,
+	"estado": null
+}
+```
+#### Listar cliente - `GET` `/cliente`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 200*
+```
 [
     {
+        "id": 1,
+        "nome": "maria",
+        "email": "maria@gmail.com",
+        "cpf": "00000000000",
+        "cep": null,
+        "rua": null,
+        "numero": "123",
+        "bairro": null,
+        "cidade": null,
+        "estado": null
+    },
+	{
+		"id": 2,
+		"nome": "julio",
+		"email": "julio@gmail.com",
+		"cpf": "10000000000",
+		"cep": null,
+		"rua": "Avenida Mar Rosa",
+		"numero": "35",
+		"bairro": null,
+		"cidade": null,
+		"estado": null
+	},
+	{
+		"id": 3,
+		"nome": "madalena",
+		"email": "madalena@gmail.com",
+		"cpf": "20000000000",
+		"cep": "12312300",
+		"rua": "18",
+		"numero": "108",
+		"bairro": null,
+		"cidade": "Salvador",
+		"estado": "BA"
+	}
+]
+```
+#### Atualizar cliente - `PUT` `/cliente/:id`
+Exemplo de Requisição Body - JSON:
+```
+	{
+		"nome": "janilson",
+		"email": "janilson@gmail.com",
+		"cpf": "30000000000",
+		"cep": "12312399",
+		"rua": "17",
+		"numero": "107",
+		"cidade": "São Paulo",
+		"estado": "SP"
+	}
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+	{
+        "id": 3,
+		"nome": "janilson",
+		"email": "janilson@gmail.com",
+		"cpf": "30000000000",
+		"cep": "12312399",
+		"rua": "17",
+		"numero": "107",
+		"bairro": null,
+		"cidade": "São Paulo",
+		"estado": "SP"
+	}
+```
+
+### Pedido
+#### Cadastrar pedido - `POST` `/pedido`
+Exemplo de Requisição Body - JSON:
+```
+{
+    "cliente_id": 3,
+    "observacao": "Entregar para o porteiro.",
+    "pedido_produtos": [ 
+			{ 
+				"produto_id": 1,
+				"quantidade_produto": 1
+			},
+			{
+				"produto_id": 2,
+				"quantidade_produto": 4
+			},
+			{ 
+				"produto_id": 3,
+				"quantidade_produto": 2
+			}
+		]
+}
+```
+
+Exemplo de Resposta:
+
+*Status Code: 201*
+```
+{
+	"pedido": {
+		"id": 2,
+		"cliente_id": 3,
+		"observacao": "Entregar para o porteiro.",
+		"valor_total": 217000
+	},
+	"pedido_produtos": [
+		{
+			"id": 3,
+			"pedido_id": 2,
+			"produto_id": 1,
+			"quantidade_produto": 1,
+			"valor_produto": 25000
+		},
+		{
+			"id": 4,
+			"pedido_id": 2,
+			"produto_id": 2,
+			"quantidade_produto": 4,
+			"valor_produto": 30000
+		},
+		{
+			"id": 5,
+			"pedido_id": 2,
+			"produto_id": 3,
+			"quantidade_produto": 2,
+			"valor_produto": 360000
+		}
+	]
+}
+```
+#### Listar produto - `GET` `/pedido`
+Exemplo de Requisição - No Body:
+```
+// sem conteúdo
+```
+
+Exemplo de Resposta:
+
+*Status Code: 200*
+```
+[
+	{
+		"pedido": {
+			"id": 1,
+			"cliente_id": 1,
+			"observacao": null,
+			"valor_total": 250000
+		},
+		"pedido_produto": [
+			{
+				"id": 1,
+				"pedido_id": 1,
+				"produto_id": 1,
+				"quantidade_produto": 1,
+				"valor_produto": 250000
+			}
+		]
+	},
+    {
         "pedido": {
-            "id": 1,
-            "valor_total": 230010,
-            "observacao": null,
-            "cliente_id": 1
+            "id": 2,
+            "cliente_id": 3,
+            "observacao": "Entregar para o porteiro.",
+            "valor_total": 217000
         },
         "pedido_produtos": [
             {
-                "id": 1,
+                "id": 2,
+                "pedido_id": 2,
+                "produto_id": 1,
                 "quantidade_produto": 1,
-                "valor_produto": 10,
-                "pedido_id": 1,
-                "produto_id": 1
+                "valor_produto": 25000
             },
             {
-                "id": 2,
+                "id": 3,
+                "pedido_id": 2,
+                "produto_id": 2,
+                "quantidade_produto": 4,
+                "valor_produto": 30000
+            },
+            {
+                "id": 4,
+                "pedido_id": 2,
+                "produto_id": 3,
                 "quantidade_produto": 2,
-                "valor_produto": 230000,
-                "pedido_id": 1,
-                "produto_id": 2
+                "valor_produto": 360000
             }
         ]
     }
 ]
 ```
+## Tecnologias
+- Node JS
+- PostgreSQL
+- Express
 
-Critérios de aceite:
+## Autores
+- João Victor Neves Campos de Jesus, 
+- Jonas da Silva Pouzo, 
+- Maísa Carla dos Santos Costa
 
-    - Caso seja enviado o parâmetro do tipo query **cliente_id**, filtrar os pedidos de acordo com o cliente, caso o id do cliente informado exista.
-    - Caso não seja informado o parâmetro do tipo query **cliente_id** todos os pedidos cadastrados deverão ser retornados.
+Organização: Cubos Academy
 
-</details>
+## Licença
 
-<details>
-<summary><b>Aplicar validação na exclusão de produto</b></summary>
-<br>
-
-Deverá ser aplicada uma regra de negócio que não permitirá exclusão de produto que tenha sido registrado em algum pedido.
-
-Critérios de aceite:
-
-    - Validar se o produto que está sendo excluído não está vinculado a nenhum pedido, caso estiver, não poderá ser excluído e deverá ser retornada uma mensagem indicando o motivo.
-
-</details>
-
-<details>
-<summary><b>Aprimorar cadastro/atualização de produto</b></summary>
-<br>
-
-Deverão ser aprimorados o cadastro e a atualização de produto para permitir vincular uma imagem a um produto. 
-Deverá ser criada uma coluna `produto_imagem` para que seja possível efetuar o vínculo entre a imagem e o produto.
-
-Critérios de aceite:
-    
-    - O campo `produto_imagem` deve ser opcional, mas, em caso de ser enviado no corpo da requisição deveremos processar a imagem vinculada a essa propriedade e armazenar a imagem em um servidor de armazenamento (Supabase, Blackblaze, etc...)
-    - Armazenar na coluna `produto_imagem` a URL que possibilita visualizar a imagem que foi efetuada upload para o servidor de armazenamento.
-
-**Lembre-se:** A URL retornada deve ser válida, ou seja, ao ser clicada deve possibilitar visualizar a imagem que foi feito upload.
-
-**ATENÇÃO:** Abaixo segue o exemplo de uma URL fictícia, mas que no caso, ilustra o que o serviço de armazenamento do Blackblaze retornaria após upload efetuado com sucesso, portanto essa seria no caso a URL que armazaremos na coluna `produto_imagem` no banco de dados.
-
-```javascript
-// Resposta cadastro/atualização de produto (body)
-{
-    "descricao": "Motorola moto g9 plus",
-    "quantidade_estoque": 100,
-    "valor": 15000,
-    "categoria_id": 2,
-    "produto_imagem": "https://s3.us-east-005.backblazeb2.com/desafio-final.jpg"
-}
-```
-
-</details>
-
-<details>
-<summary><b>Aprimorar exclusão de produto</b></summary>
-<br>
-
-Deverá ser aprimorada a exclusão de produto para que quando o produto for excluído também seja removida a imagem vinculada a ele na servidor de armazenamento.
-
-Critérios de aceite:
-
-    - Na exclusão do produto a imagem vinculada a este produto deverá ser excluída do servidor de armazenamento.
-    
-</details>
-
-</details>
-
----
-
-## Aulas úteis:
-
--   [Revisão pt1](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/34df4763-689b-409c-894b-248dacd70d81)
--   [Revisão pt2](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/6b733465-c761-40de-94ad-ac85a4129152)
--   [Git e fluxo de trabalho em equipe](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/2812eee7-5ba5-4e62-b2d0-7b392ba6b870)
--   [Deploy](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/4c75e05a-581d-427b-9cdc-527c1fab47b2)
--   [Envio de e-mails](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/9ae4e70f-f502-41c5-af47-c22e9c0880a7)
--   [Validações e boas práticas](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/19bcf6fa-5589-43ea-b6ed-a9817b9d51ae)
--   [Upload de arquivos](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/a124ac7e-9db8-4007-9532-cf0e84c8a6cc)
-
-
-###### tags: `back-end` `módulo 5` `nodeJS` `PostgreSQL` `API REST` `desafio`
+- MIT
