@@ -1,0 +1,37 @@
+{
+  "name": "desafio-m5-cubos-academy",
+  "version": "1.0.0",
+  "description": "Desafio desenvolvido no módulo 5 no curso da Cubos Academy pelo grupo JamjaScript.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "start": "node ./src/index.js"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "pdv",
+    "ponto",
+    "de",
+    "vendas"
+  ],
+  "author": "João Victor Neves Campos de Jesus, Jonas da Silva Pouzo, Maísa Carla dos Santos Costa",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1521.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "handlebars": "^4.7.8",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.0.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
+    "pg": "^8.11.3"
+  }
+}
